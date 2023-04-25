@@ -1,0 +1,8 @@
+*.csv
+*.py
+/D线薄板烘丝的历史数据/
+/failed/
+/mis_data/
+/venv/
+/model/
+test.ipynb
