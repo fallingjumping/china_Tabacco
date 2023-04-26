@@ -6,3 +6,4 @@ test.csv
 /venv/
 /model/
 test.ipynb
+/.venv/
