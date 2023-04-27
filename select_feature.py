@@ -31,14 +31,14 @@ def corrX_orig(df, cut = 0.9) :
 
 def select_feature():
     full_data = pd.DataFrame()
-    filename = './mis_data/'
+    filename = './china_tobacco/data/mis_data/'
     filelist = os.listdir(filename)
     for f in filelist:
         df = pd.read_csv(os.path.join(filename,f),encoding='utf-16',sep='\t')
         df['时间'] = df['时间'].astype('datetime64[ns]')
         df['时间'] = df[['时间']].apply(lambda x: x[0].timestamp(), axis=1).astype(int)
         # data['时间'] = data['时间'].astype('int64') // 10**9
-        df['时间'] = df['时间'] - df['时间'][0]
+        df['时间'] = (df['时间'] - df['时间'][0])/10
         full_data = pd.concat([full_data, df], axis=0)
     full_data.reset_index(drop=True, inplace=True)
 
@@ -68,12 +68,12 @@ def select_feature():
     # data.drop(columns=['锅炉分汽缸温度-薄板D'], inplace=True)
 
     # corr > 0.85
-    dropcols_names = corrX_orig(data, cut = 0.85)
-    data.drop(columns=dropcols_names, inplace=True)
+    # dropcols_names = corrX_orig(data, cut = 0.85)
+    # data.drop(columns=dropcols_names, inplace=True)
 
     data = pd.concat([data,full_data['KLD热风风门开度（%）d']], axis=1)
-
-    data.to_csv('./full_data.csv', encoding='utf-16', sep='\t')
+    print(data.shape)
+    data.to_csv('./china_tobacco/data/full_data.csv', encoding='utf-16', sep='\t')
 
     # x = data.drop(columns = ['KLD1区蒸汽薄膜阀开度（%）d'])
     # y = data.loc[:,['KLD1区蒸汽薄膜阀开度（%）d']]
