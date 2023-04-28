@@ -31,7 +31,7 @@ def corrX_orig(df, cut = 0.9) :
 
 def select_feature():
     full_data = pd.DataFrame()
-    filename = './china_tobacco/data/mis_data/'
+    filename = './data/mis_data/'
     filelist = os.listdir(filename)
     for f in filelist:
         df = pd.read_csv(os.path.join(filename,f),encoding='utf-16',sep='\t')
@@ -60,7 +60,8 @@ def select_feature():
     data.drop(columns=drop_col,inplace=True)
 
     # 数值集中于某几个值,数值于小数点后几位浮动
-    col = ['1号切丝机运行', 'KLD筒转速（l/min）d', '切丝机选中','是否是设备自动控制','筒体电机实际频率d','膨胀轮电机频率d','锅炉分汽缸温度-薄板D']
+    col = ['1号切丝机运行', 'KLD筒转速（l/min）d', '切丝机选中','是否是设备自动控制','筒体电机实际频率d','膨胀轮电机频率d','锅炉分汽缸温度-薄板D',]
+        #    '除尘房除尘风机频率d','除尘房排潮风机频率(Hz)d','排潮风机电机频率d', 'ZC-35除尘风机运行频率d','PC-37排潮风机运行频率d'] or re.match('(?=除尘房)', c)
     for c in col:
         if c in data.columns:
             data.drop(columns=[c],inplace=True)
@@ -73,7 +74,7 @@ def select_feature():
 
     data = pd.concat([data,full_data['KLD热风风门开度（%）d']], axis=1)
     print(data.shape)
-    data.to_csv('./china_tobacco/data/full_data.csv', encoding='utf-16', sep='\t')
+    data.to_csv('./data/full_data.csv', encoding='utf-16', sep='\t')
 
     # x = data.drop(columns = ['KLD1区蒸汽薄膜阀开度（%）d'])
     # y = data.loc[:,['KLD1区蒸汽薄膜阀开度（%）d']]
